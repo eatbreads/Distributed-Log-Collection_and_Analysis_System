@@ -1,0 +1,76 @@
+# General ignores
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+
+# C++ build files
+/build/
+/bin/
+/obj/
+*.o
+*.a
+*.so
+*.exe
+*.dll
+*.dylib
+
+CMakeCache.txt
+CMakeFiles/
+Makefile
+
+
+# Qt-specific
+*.pro.user
+*.pro.user.*
+*.qmake.stash
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+
+# Kafka & Flink logs
+logs/
+*.log
+*.out
+*.err
+kafka-logs/
+zookeeper/
+
+# Redis dump files
+dump.rdb
+appendonly.aof
+
+# Elasticsearch data
+elasticsearch/data/
+
+# Kubernetes config
+.kube/config
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Docker-related
+.dockerignore
+docker-compose.override.yml
+docker-compose.yml
+*.tar
+
+# Kubernetes manifests (optional)
+*.yaml
+*.yml
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# VSCode settings
+.vscode/
+
+# Node.js (if using React frontend)
+node_modules/
+package-lock.json
+yarn.lock
