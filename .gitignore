@@ -74,3 +74,38 @@ docker-compose.yml
 node_modules/
 package-lock.json
 yarn.lock
+
+
+# Node.js (前端相关，针对 Vue 或 React 项目)
+node_modules/
+package-lock.json
+yarn.lock
+dist/
+build/
+
+# Vite 或 Webpack 生成的构建文件
+.vite/
+.cache/
+
+# 运行时文件
+*.log
+*.out
+*.err
+
+# 环境文件（可能包含敏感信息）
+.env
+.env.local
+.env.*.local
+
+# 本地开发工具和 IDE
+.idea/
+.vscode/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.swp
+*.swo
+*.bak
