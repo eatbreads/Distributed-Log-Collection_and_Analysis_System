@@ -63,17 +63,29 @@
   
   <script setup>
   import { ref, computed, onMounted } from 'vue';
-  
+  // 从 .env 读取 API 地址
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8089";
   // 假设这个是告警数据API的模拟函数
   const fetchAlerts = async (filters) => {
-    // 这里你可以调用一个实际的 API 来获取告警数据
-    return [
-      { id: 1, type: 'Database', module: 'database', timestamp: '2025-03-18', status: 'unprocessed', handler: '', remark: '' },
-      { id: 2, type: 'System', module: 'system', timestamp: '2025-03-17', status: 'processed', handler: '小鸡', remark: '小鸡已完成' },
-      { id: 3, type: 'Network', module: 'network', timestamp: '2025-03-16', status: 'unprocessed', handler: '小鸡', remark: '未完成,需要检查小鸡' },
-      // 其他告警数据...
-    ];
-  };
+  try {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_BASE_URL}/alerts?${query}`, {
+      method: 'GET',
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching alerts:', error);
+    return [];
+  }
+};
   
   const filter = ref({
     status: 'all',
