@@ -93,7 +93,6 @@ build/
 *.err
 
 # 环境文件（可能包含敏感信息）
-.env
 .env.local
 .env.*.local
 
