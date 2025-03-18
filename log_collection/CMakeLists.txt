@@ -13,13 +13,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # 查找 vcpkg 安装的库（如 zlib）
 # 假设你已经安装了 zlib，通过 vcpkg 或其他包管理器
-
+find_package(httplib CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 # 添加源文件
 add_executable(main main.cpp)
 
 # 链接 zlib 库
-# target_link_libraries(main PRIVATE spdlog::spdlog)
+target_link_libraries(main PRIVATE httplib::httplib nlohmann_json::nlohmann_json)
 
 # 可选：添加 include 目录（如果需要的话）
 # target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/include)

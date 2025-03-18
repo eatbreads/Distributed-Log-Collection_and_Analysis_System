@@ -69,8 +69,8 @@
     // 这里你可以调用一个实际的 API 来获取告警数据
     return [
       { id: 1, type: 'Database', module: 'database', timestamp: '2025-03-18', status: 'unprocessed', handler: '', remark: '' },
-      { id: 2, type: 'System', module: 'system', timestamp: '2025-03-17', status: 'processed', handler: 'John', remark: '已处理' },
-      { id: 3, type: 'Network', module: 'network', timestamp: '2025-03-16', status: 'unprocessed', handler: '', remark: '需要检查网络配置' },
+      { id: 2, type: 'System', module: 'system', timestamp: '2025-03-17', status: 'processed', handler: '小鸡', remark: '小鸡已完成' },
+      { id: 3, type: 'Network', module: 'network', timestamp: '2025-03-16', status: 'unprocessed', handler: '小鸡', remark: '未完成,需要检查小鸡' },
       // 其他告警数据...
     ];
   };

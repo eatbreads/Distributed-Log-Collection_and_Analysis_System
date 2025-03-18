@@ -5,15 +5,27 @@ const keyword = ref('');
 const field = ref('all');
 const startTime = ref('');
 const endTime = ref('');
-const logs = ref([
-  { id: 1, level: 'INFO', message: '系统启动成功', timestamp: '2025-03-18 12:00:00', details: '详细日志内容...' },
-  { id: 2, level: 'ERROR', message: '数据库连接失败', timestamp: '2025-03-18 12:10:00', details: '错误详情...' },
-]);
+const logs = ref([]);
 const selectedLog = ref(null);
+// 从 .env 读取 API 地址
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8089";
+// 查询日志 API
+const searchLogs = async () => {
+  try {
+    const params = new URLSearchParams({
+      keyword: keyword.value,
+      field: field.value,
+      start_time: startTime.value,
+      end_time: endTime.value,
+    });
 
-const searchLogs = () => {
-  console.log('搜索日志', { keyword: keyword.value, field: field.value, startTime: startTime.value, endTime: endTime.value });
-  // TODO: 调用 API 获取日志数据
+    const response = await fetch(`${API_BASE_URL}/logs?${params}`);
+    if (!response.ok) throw new Error('查询失败');
+
+    logs.value = await response.json();
+  } catch (error) {
+    console.error('日志查询失败:', error);
+  }
 };
 </script>
 
