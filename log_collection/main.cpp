@@ -1,9 +1,12 @@
 #include "httplib.h"
 #include <iostream>
 #include <nlohmann/json.hpp>
-
+#include <librdkafka/rdkafkacpp.h>
+#include <kafka.h>
 using json = nlohmann::json;
 using namespace httplib;
+
+
 
 void set_cors(httplib::Response& res)
 {
@@ -13,8 +16,9 @@ void set_cors(httplib::Response& res)
 }
 
 int main() {
-    Server svr;
 
+    Server svr;
+    
     svr.Get("/api/logs", [](const Request& req, Response& res) {
         // 解析查询参数
         set_cors(res);
