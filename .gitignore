@@ -19,7 +19,8 @@ Thumbs.db
 CMakeCache.txt
 CMakeFiles/
 Makefile
-
+makefile
+main
 
 # Qt-specific
 *.pro.user

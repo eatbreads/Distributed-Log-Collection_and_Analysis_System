@@ -16,7 +16,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 find_package(httplib CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(hiredis CONFIG REQUIRED)
-
+find_package(RdKafka CONFIG REQUIRED)
 
 # 手动查找kafka
 find_library(RDKAFKA_LIB rdkafka HINTS /root/vcpkg/installed/x64-linux/lib)
@@ -31,6 +31,7 @@ target_link_libraries(main PRIVATE
     nlohmann_json::nlohmann_json
     hiredis  # 链接 hiredis 库
     ${RDKAFKA_LIB}
+    RdKafka::rdkafka++
 )
 
 # 可选：添加 include 目录（如果需要的话）

@@ -3,10 +3,31 @@
 #include <nlohmann/json.hpp>
 #include <librdkafka/rdkafkacpp.h>
 #include <kafka.h>
+#include <thread>
+#include <chrono>
 using json = nlohmann::json;
 using namespace httplib;
 
+// 生产者线程函数
+void producerThread() {
+    KafkaProducer producer("localhost:9092", "my_topic", 0);
 
+    for (int i = 0; i < 10; i++) {
+        std::string message = "Message " + std::to_string(i);
+        std::string key = "Key" + std::to_string(i);
+        producer.pushMessage(message, key);
+        std::cout << "Sent: " << message << " with key: " << key << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(3)); // 每秒发送一条消息
+    }
+}
+
+// 消费者线程函数
+void consumerThread() {
+    std::vector<std::string> topics = {"my_topic"};
+    KafkaConsumer consumer("localhost:9092", "my_group", topics, 0);
+
+    consumer.pullMessage();
+}
 
 void set_cors(httplib::Response& res)
 {
@@ -15,7 +36,19 @@ void set_cors(httplib::Response& res)
     res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 }
 
-int main() {
+int main(int argc ,const char** argv) {
+
+        // 启动生产者线程
+    std::thread producer(producerThread);
+
+    // 启动消费者线程
+    std::thread consumer(consumerThread);
+
+    // 等待线程完成
+    producer.join();
+    consumer.join();
+
+
 
     Server svr;
     
@@ -42,7 +75,7 @@ int main() {
     });
 
     svr.Get("/api/alerts",[](const Request& req, Response& res) {
-        std::cout << "进入"<<std::endl;
+
         set_cors(res);
         auto status = req.get_param_value("status");
         auto module = req.get_param_value("module");
@@ -62,7 +95,7 @@ int main() {
         res.set_header("Content-Type", "application/json");
         res.status = 200;
         res.body = alerts.dump();
-        std::cout << "返回成功"<<std::endl;
+
     });
 
     std::cout << "Server listening on port 8089..." << std::endl;
